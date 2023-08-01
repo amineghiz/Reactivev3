@@ -4,17 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Domain;
+using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Activities
+namespace Application.Rooms
 {
     public class Edit
     {
         public class Command : IRequest
         {
-            public Activity Activity { get; set; }
+            internal object room;
+
+            public Room Room { get; set; }
             public Guid Id { get; set; }
         }
         public class Handler : IRequestHandler<Command>
@@ -29,11 +32,18 @@ namespace Application.Activities
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                var activity = await _context.Activities.FirstOrDefaultAsync(a => a.Id == request.Id);
+                var room = await _context.Rooms.FirstOrDefaultAsync(a => a.Id == request.Id);
 
                 //_mapper.Map(request.Activity, activity);
-                activity.City = request.Activity.City;
-                activity.Category = request.Activity.Category;
+                room.Denomination = request.Room.Denomination;
+                room.BedNumber = request.Room.BedNumber;
+                room.MaxAdultsOccupation = request.Room.MaxAdultsOccupation;
+                room.MaxKidsOccupation = request.Room.MaxKidsOccupation;
+                room.TotalRoomNumber = request.Room.TotalRoomNumber;
+                room.Description = request.Room.Description;
+                room.PMSIntegration = request.Room.PMSIntegration;
+               
+
 
                 await _context.SaveChangesAsync(cancellationToken);
 

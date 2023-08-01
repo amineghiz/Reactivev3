@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
+using Domain.Entities;
 using MediatR;
 using Persistence;
 
-namespace Application.Activities
+namespace Application.Rooms
 {
     public class Create
     {
-        public class Command : IRequest<Activity>
+        public class Command : IRequest<Room>
         {
-            public Activity Activity { get; set; }
+            public Room Room { get; set; }
         }
-        public class Handler : IRequestHandler<Command,Activity>
+        public class Handler : IRequestHandler<Command, Room>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -22,13 +23,12 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<Activity> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Room> Handle(Command request, CancellationToken cancellationToken)
             {
+                _context.Rooms.AddRange(request.Room);
 
-                _context.Activities.AddRange(request.Activity);
                 await _context.SaveChangesAsync(cancellationToken);
-
-                return request.Activity;
+                return request.Room;
             }
         }
     }

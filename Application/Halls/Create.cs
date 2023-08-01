@@ -6,15 +6,15 @@ using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Activities
+namespace Application.Halls
 {
     public class Create
     {
-        public class Command : IRequest<Activity>
+        public class Command : IRequest<Hall>
         {
-            public Activity Activity { get; set; }
+            public Hall Hall { get; set; }
         }
-        public class Handler : IRequestHandler<Command,Activity>
+        public class Handler : IRequestHandler<Command, Hall>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -22,13 +22,12 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<Activity> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Hall> Handle(Command request, CancellationToken cancellationToken)
             {
+                _context.Halls.AddRange(request.Hall);
 
-                _context.Activities.AddRange(request.Activity);
                 await _context.SaveChangesAsync(cancellationToken);
-
-                return request.Activity;
+                return request.Hall;
             }
         }
     }

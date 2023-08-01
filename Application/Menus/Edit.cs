@@ -8,13 +8,15 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Activities
+namespace Application.Menus
 {
     public class Edit
     {
         public class Command : IRequest
         {
-            public Activity Activity { get; set; }
+            internal object menu;
+
+            public Menu Menu { get; set; }
             public Guid Id { get; set; }
         }
         public class Handler : IRequestHandler<Command>
@@ -29,11 +31,14 @@ namespace Application.Activities
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                var activity = await _context.Activities.FirstOrDefaultAsync(a => a.Id == request.Id);
+                var menu = await _context.Menus.FirstOrDefaultAsync(a => a.Id == request.Id);
 
                 //_mapper.Map(request.Activity, activity);
-                activity.City = request.Activity.City;
-                activity.Category = request.Activity.Category;
+                menu.Title = request.Menu.Title;
+                menu.Description = request.Menu.Description;
+                menu.PricePerPerson = request.Menu.PricePerPerson;
+                menu.VAT = request.Menu.VAT;
+                
 
                 await _context.SaveChangesAsync(cancellationToken);
 

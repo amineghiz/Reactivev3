@@ -3,15 +3,15 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Activities
+namespace Application.Halls
 {
     public class List
     {
-        public class Query : IRequest<List<Activity>>
+        public class Query : IRequest<List<Hall>>
         {
         }
 
-        public class Handler : IRequestHandler<Query, List<Activity>>
+        public class Handler : IRequestHandler<Query, List<Hall>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -19,9 +19,9 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<List<Activity>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<Hall>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Activities.ToListAsync();
+                return await _context.Halls.ToListAsync();
             }
         }
     }

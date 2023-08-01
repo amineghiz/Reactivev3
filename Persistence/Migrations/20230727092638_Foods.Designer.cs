@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230727092638_Foods")]
+    partial class Foods
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -46,124 +49,27 @@ namespace Persistence.Migrations
                     b.ToTable("Activities");
                 });
 
-            modelBuilder.Entity("Domain.Drink", b =>
+            modelBuilder.Entity("Domain.Food", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool?>("Alcohol")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Entitled")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("PersonDescription")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PricePerPerson")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Title")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("VTA")
+                    b.Property<string>("TVARate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Drinks");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Room", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("BedNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Denomination")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MaxAdultsOccupation")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MaxKidsOccupation")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PMSIntegration")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TotalRoomNumber")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("Domain.Hall", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Banquet")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Cabaret")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Cocktail")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Conference")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DayLight")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool?>("NoHalfDay")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool?>("OnlyForSeminar")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PriceHalfDay")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PricePerDay")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Reunion")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SchoolRank")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Showroom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Surface")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TableInU")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("vide")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Halls");
+                    b.ToTable("Foods");
                 });
 
             modelBuilder.Entity("Domain.Hotel", b =>
@@ -219,27 +125,36 @@ namespace Persistence.Migrations
                     b.ToTable("Hotels");
                 });
 
-            modelBuilder.Entity("Domain.Menu", b =>
+            modelBuilder.Entity("Domain.Room", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("BedNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Denomination")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PricePerPerson")
+                    b.Property<string>("MaxAdultsOccupation")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("MaxKidsOccupation")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("VAT")
+                    b.Property<string>("PMSIntegration")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TotalRoomNumber")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Menus");
+                    b.ToTable("Rooms");
                 });
 #pragma warning restore 612, 618
         }

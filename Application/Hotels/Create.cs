@@ -6,15 +6,15 @@ using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Activities
+namespace Application.Hotels
 {
     public class Create
     {
-        public class Command : IRequest<Activity>
+        public class Command : IRequest<Hotel>
         {
-            public Activity Activity { get; set; }
+            public Hotel Hotel { get; set; }
         }
-        public class Handler : IRequestHandler<Command,Activity>
+        public class Handler : IRequestHandler<Command, Hotel>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -22,13 +22,12 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<Activity> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Hotel> Handle(Command request, CancellationToken cancellationToken)
             {
+                _context.Hotels.AddRange(request.Hotel);
 
-                _context.Activities.AddRange(request.Activity);
                 await _context.SaveChangesAsync(cancellationToken);
-
-                return request.Activity;
+                return request.Hotel;
             }
         }
     }
